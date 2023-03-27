@@ -9,14 +9,14 @@ import 'app/index.css';
 import store, { persistor } from 'app/store/store';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-	<React.StrictMode>
-		<Provider store={store}>
-			<PersistGate
-				loading={null}
-				persistor={persistor}
-			>
+	<Provider store={store}>
+		<PersistGate
+			loading={null}
+			persistor={persistor}
+		>
+			<React.StrictMode>
 				<App />
-			</PersistGate>
-		</Provider>
-	</React.StrictMode>
+			</React.StrictMode>
+		</PersistGate>
+	</Provider>
 );

@@ -1,11 +1,22 @@
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+
 import 'app/App.css';
 
+import Search from 'pages/Search';
+
+const router = createBrowserRouter([
+	{
+		path: '/',
+		element: <Search />
+	},
+	{
+		path: '/:id',
+		element: <div>ids</div>
+	}
+]);
+
 function App() {
-	return (
-		<div>
-			<div>app</div>
-		</div>
-	);
+	return <RouterProvider router={router} />;
 }
 
 export default App;

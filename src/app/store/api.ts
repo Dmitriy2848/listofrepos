@@ -5,32 +5,35 @@ import { IRepo } from 'app/store/IRepo';
 
 type IFetchAllReposArgs = {
 	query: string;
-	limit: number;
-	page: number;
+	limit?: number;
+	page?: number;
 };
 interface IFetchAllRepos {
 	total_count: number;
 	incomplete_results: boolean;
 	items: IRepo[];
 }
-
 interface IFetchRepoArgs {
 	owner: string;
 	repo: string;
 }
 
+const BASE_URL = 'https://api.github.com';
+
 const fetchAllRepos = createAsyncThunk<IFetchAllRepos, IFetchAllReposArgs>(
 	'repos/fetchAllRepos',
-	async ({ query, limit, page }) => {
-		return await axios.get(
-			`https://api.github.com/search/repositories?q=${query}&per_page=${limit}&page=${page}`
+	async ({ query, limit = 10, page = 1 }) => {
+		const res = await axios.get(
+			`${BASE_URL}/search/repositories?q=${query}&per_page=${limit}&page=${page}`
 		);
+		return res.data;
 	}
 );
 const fetchRepo = createAsyncThunk<IRepo, IFetchRepoArgs>(
 	'repos/fetchRepos',
 	async ({ owner, repo }) => {
-		return await axios.get(`https://api.github.com/repos/${owner}/${repo}`);
+		const res = await axios.get(`${BASE_URL}/repos/${owner}/${repo}`);
+		return res.data;
 	}
 );
 

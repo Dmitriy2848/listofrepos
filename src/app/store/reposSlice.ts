@@ -1,23 +1,26 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 import { IFetchAllRepos, fetchAllRepos, fetchRepo } from 'app/store/api';
 
 interface ISettingsSlice {
+	[key: string]: any;
 	query: string;
-	repos: IFetchAllRepos;
+	data: IFetchAllRepos;
 	limit: number;
 	isLoading: boolean;
 	isError: boolean;
+	page: number;
 }
 
 const initialState: ISettingsSlice = {
 	query: '',
-	repos: {
+	data: {
 		total_count: 0,
 		incomplete_results: false,
 		items: []
 	},
 	limit: 10,
+	page: 1,
 	isLoading: false,
 	isError: false
 };
@@ -26,6 +29,11 @@ const settingsSlice = createSlice({
 	name: 'repos',
 	initialState: initialState,
 	reducers: {
+		updateField(state, action: PayloadAction<Partial<ISettingsSlice>>) {
+			for (const [key, value] of Object.entries(action.payload)) {
+				state[key] = value;
+			}
+		},
 		updateRepo() {},
 		deleteRepo() {}
 	},
@@ -40,7 +48,7 @@ const settingsSlice = createSlice({
 				state.isError = true;
 			})
 			.addCase(fetchAllRepos.fulfilled, (state, { payload }) => {
-				state.repos = payload;
+				state.data = payload;
 				state.isLoading = false;
 			});
 	}
@@ -48,4 +56,4 @@ const settingsSlice = createSlice({
 
 export default settingsSlice.reducer;
 
-export const { updateRepo, deleteRepo } = settingsSlice.actions;
+export const { updateField, updateRepo, deleteRepo } = settingsSlice.actions;
