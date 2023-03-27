@@ -6,6 +6,8 @@ import { ReactComponent as Pen } from 'shared/assets/pen.svg';
 import { ReactComponent as Star } from 'shared/assets/star.svg';
 
 interface IRepoCardProps {
+	projectLink: string;
+	authorLink: string;
 	name: string;
 	author: string;
 	stars: number;
@@ -14,6 +16,8 @@ interface IRepoCardProps {
 }
 
 const RepoCard: FC<IRepoCardProps> = ({
+	projectLink,
+	authorLink,
 	name,
 	author,
 	stars,
@@ -25,7 +29,7 @@ const RepoCard: FC<IRepoCardProps> = ({
 	return (
 		<div className='w-72 rounded-lg border shadow-sm overflow-hidden p-3'>
 			<Link
-				to=''
+				to={projectLink}
 				className='font-medium inline-block'
 			>
 				<h4>{name}</h4>
@@ -37,7 +41,7 @@ const RepoCard: FC<IRepoCardProps> = ({
 					className='rounded-lg w-10'
 				/>
 				<Link
-					to=''
+					to={authorLink}
 					className='block'
 				>
 					{author}

@@ -20,6 +20,8 @@ const ReposList: FC = () => {
 			<div className='flex flex-wrap gap-7 justify-center'>
 				{repos.data.items?.map((repo) => (
 					<RepoCard
+						projectLink={repo.html_url}
+						authorLink={repo.owner.html_url}
 						key={repo.id}
 						name={repo.name}
 						author={repo.owner.login}
